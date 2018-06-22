@@ -11,14 +11,26 @@
         "Programming Languages"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extension.sayHello",
+        "onCommand:extension.sayHey"
     ],
-    "main": "./extension",
+    "main": "./out/extension",
     "contributes": {
+        "keybindings":[
+            {
+                "command": "extension.sayHello",
+                "key": "ctrl+e",
+                "when": "editorTextFocus"
+            }
+        ],
         "commands": [
             {
                 "command": "extension.sayHello",
-                "title": "Hello World2"
+                "title": "Hello World3"
+            },
+            {
+                "command": "extension.sayHey",
+                "title": "Hey Silkroad"
             }
         ],
         "languages": [{
