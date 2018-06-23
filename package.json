@@ -16,7 +16,7 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "keybindings":[
+        "keybindings": [
             {
                 "command": "extension.sayHello",
                 "key": "ctrl+e",
@@ -33,17 +33,28 @@
                 "title": "Hey Silkroad"
             }
         ],
-        "languages": [{
-            "id": "maxscript",
-            "aliases": ["MaxScript", "maxscript"],
-            "extensions": [".ms",".mse",".mcr"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "maxscript",
-            "scopeName": "source.maxscript",
-            "path": "./syntaxes/MaxScript.tmLanguage"
-        }]
+        "languages": [
+            {
+                "id": "maxscript",
+                "aliases": [
+                    "MaxScript",
+                    "maxscript"
+                ],
+                "extensions": [
+                    ".ms",
+                    ".mse",
+                    ".mcr"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "maxscript",
+                "scopeName": "source.maxscript",
+                "path": "./syntaxes/MaxScript.tmLanguage"
+            }
+        ]
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
