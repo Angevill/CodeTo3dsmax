@@ -1,17 +1,20 @@
-// We use the built-in 'readline' module for reading console input
-var ffi = require('ffi'),
+var exports = module.exports = {};
+
+// PLEASE make this FFI module rebuild by target electron version;
+// cause vscode was build by electron!!
+// current vscode 1.24.1 based on electron v1.7.12
+// you should rebuild like "node-gyp rebuild --target=v1.7.12 --disturl="https://atom.io/download/electron" "
+// otherwise , you will get tons of error~
+const ffi = require('ffi');
     // WinAPI methods require various constants, so store them in named variables
     // Here we need the message id for the SETDRAW message along with the integer
     // values for FALSE and TRUE
-    WM_SETTEXT = 0x000C,
-    WM_CHAR = 0x0102,
-    VK_RETURN = 0x0D,
-    handle;
-    cmd = 'fileIn @"D:\\GitHub\\SRUtility\\Main\\ScriptVault\\SRUtility_UE4Tools_Max2UE4.ms"'
-var ref = require('ref');
+const WM_SETTEXT = 0x000C;
+const WM_CHAR = 0x0102;
+const VK_RETURN = 0x0D;
 
 
-//var LPARAM  = ref.refType(ref.types.int64);
+
 
 // Get proxy functions for native WINAPI FindWindow and SendMessage functions
 
@@ -21,6 +24,7 @@ var ref = require('ref');
 var winapi = new ffi.Library("User32", {
     "FindWindowA": ["int32", ["string", "string"]],
     "FindWindowExA": ["int32", ["int32", "int32", "string", "string"]],
+    //TODO: i dont konw how to make lParam valid under this arg list....
     "SendMessageW": ["int64", ["int32", "uint32", "uint32", "string"]],
     "SetWindowTextW": ["bool", ["int32", "string"]]
 });
@@ -29,32 +33,24 @@ function TEXT(text){
     return new Buffer(text, 'ucs2').toString('binary');
  }
 
-// In order to loop calls to the async 'question' method, we use recursion as
-// a naive approach. This is not a sustainable strategy as it eventually stack
-// overflows, but is used here for code clarity.
-function sendPrompt() {
-    // Invoking the methods registered wif ffi is as simple as calling
-    // them like any other javascript method
-    handle = winapi.FindWindowA(null, "Untitled - Autodesk 3ds Max  2014 x64  ");
-    //handle = winapi.FindWindowA(null, match[1]);
-    console.log("Process ID", handle);
+
+exports.sendPrompt = function(cmd) {
+    let scriptWindow;
+    let scirptEditor;
+
+    //handle = winapi.FindWindowA(null, "Untitled - Autodesk 3ds Max  2014 x64  ");
+
+    //console.log("Process ID", handle);
 
     scriptWindow = winapi.FindWindowExA(null, null, null, "MAXScript Listener");
     scirptEditor = winapi.FindWindowExA(scriptWindow, null, "MXS_Scintilla", null)
     
-    console.log("child process ID", scriptWindow);
     console.log("child Script ID", scirptEditor);
 
-    // Use SendMessage to stop all paints for the window,
-    // effectively rendering it non-interactable
 
-    // Disable drawing by sending SETDRAW message with FALSE
     winapi.SendMessageW(scirptEditor, WM_SETTEXT, 0, TEXT(cmd));
-    winapi.SendMessageW(scirptEditor, WM_CHAR, VK_RETURN, String(0));
-    scirptEditor = null;
-    //winapi.SetWindowTextW(scriptWindow, TEXT(cmd));
+    winapi.SendMessageW(scirptEditor, WM_CHAR, VK_RETURN, String(0));// kind of buggy with String(int)...
     console.log("child Script Inject Done");
+    scirptEditor = null;
+    
 }
-
-// Start the loop by calling sendPrompt
-sendPrompt();
