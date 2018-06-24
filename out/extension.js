@@ -22,6 +22,7 @@ function activate(context) {
             let currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
             let currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);
             let cmd = 'fileIn @' +"\"" + currentlyOpenTabfilePath + "\"";
+            console.log(cmd);
             sendCommand.sendPrompt(cmd);
             let vsInfoMsg = 'Send ' + currentlyOpenTabfileName + ' to Max';
             vscode.window.showInformationMessage(vsInfoMsg);
