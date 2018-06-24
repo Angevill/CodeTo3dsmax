@@ -65,6 +65,7 @@
     "dependencies": {
         "ctypes": "0.0.1",
         "ffi": "^2.2.0",
+        "iconv-lite": "^0.4.23",
         "ref": "^1.3.5",
         "win32-api": "^3.0.1",
         "win32-def": "^2.1.1"
