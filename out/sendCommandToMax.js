@@ -5,7 +5,6 @@
 // you should rebuild like "node-gyp rebuild --target=v1.7.12 --disturl="https://atom.io/download/electron" "
 // otherwise , you will get tons of error~
 var ffi = require('ffi');
-const vscode = require('vscode');
 
 const WM_SETTEXT = 0x000C;
 const WM_CHAR = 0x0102;
@@ -29,7 +28,7 @@ exports.sendPrompt = function(cmd) {
     let scriptWindow = winapi.FindWindowExA(null, null, null, "MAXScript Listener");
     let scirptEditor = winapi.FindWindowExA(scriptWindow, null, "MXS_Scintilla", null)
     
-    console.log("child Script ID", scirptEditor);
+    //console.log("child Script ID", scirptEditor);
     if (scirptEditor != 0) {
         let isCmdSent = winapi.SendMessageW(scirptEditor, WM_SETTEXT, 0, TEXT(cmd));
         let isEnterSent = winapi.SendMessageW(scirptEditor, WM_CHAR, VK_RETURN, String(0));
