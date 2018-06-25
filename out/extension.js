@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const path = require('path');
-let sendCommand = require("./sendCommandToMax.js");
+var sendCommand = require("./sendCommandToMax.js");
 
 
 
@@ -17,12 +17,13 @@ function activate(context) {
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
+
     let disposable = vscode.commands.registerCommand
     (
         'extension.sendMXScriptFile', 
         function () {
             let currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
-            let currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);
+            let currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);        
             let cmd = 'fileIn @' + "\"" + currentlyOpenTabfilePath + "\" ";
             console.log(cmd);
             sendCommand.sendPrompt(cmd);
