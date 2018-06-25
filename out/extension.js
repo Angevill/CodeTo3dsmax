@@ -2,7 +2,9 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const path = require('path');
-const sendCommand = require("./sendCommandToMax.js");
+let sendCommand = require("./sendCommandToMax.js");
+
+
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -21,7 +23,7 @@ function activate(context) {
         function () {
             let currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
             let currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);
-            let cmd = 'fileIn @' +"\"" + currentlyOpenTabfilePath + "\"";
+            let cmd = 'fileIn @' + "\"" + currentlyOpenTabfilePath + "\" ";
             console.log(cmd);
             sendCommand.sendPrompt(cmd);
             let vsInfoMsg = 'Send ' + currentlyOpenTabfileName + ' to Max';
