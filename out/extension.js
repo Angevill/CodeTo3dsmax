@@ -26,9 +26,14 @@ function activate(context) {
             let currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);        
             let cmd = 'fileIn @' + "\"" + currentlyOpenTabfilePath + "\" ";
             console.log(cmd);
-            sendCommand.sendPrompt(cmd);
-            let vsInfoMsg = 'Send ' + currentlyOpenTabfileName + ' to Max';
-            vscode.window.showInformationMessage(vsInfoMsg);
+            var isSent = sendCommand.sendPrompt(cmd);
+            if (isSent) {
+                let vsInfoMsg = 'Send ' + currentlyOpenTabfileName + ' to Max';
+                vscode.window.showInformationMessage(vsInfoMsg);
+            } else {
+                vscode.window.showErrorMessage("No Max App Launched..");
+            }
+
         }
     );
 
