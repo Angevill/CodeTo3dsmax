@@ -19,7 +19,7 @@
             {
                 "command": "extension.sendMXScriptFile",
                 "key": "ctrl+e",
-                "when": "editorTextFocus"
+                "when": "editorLangId == maxscript"
             }
         ],
         "commands": [

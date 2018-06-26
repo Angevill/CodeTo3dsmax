@@ -5,6 +5,7 @@
 // you should rebuild like "node-gyp rebuild --target=v1.7.12 --disturl="https://atom.io/download/electron" "
 // otherwise , you will get tons of error~
 var ffi = require('ffi');
+const path = require('path');
 
 const WM_SETTEXT = 0x000C;
 const WM_CHAR = 0x0102;
@@ -24,20 +25,35 @@ function TEXT(text){
     return new Buffer(text, 'ucs2').toString('binary');
  }
 
-exports.sendPrompt = function(cmd) {
+
+function convertToSolidCMD(file) {
+    if (path.extname(file) === ".ms") {
+        return ('fileIn @' + "\"" + file + "\" ");
+    } else if (path.extname(file) === ".py") {
+        return ('python.executeFile @' + "\"" + file + "\" ");
+    } else {
+        return false;
+    }
+} 
+
+function sendMXSToMAX(file) {
     let scriptWindow = winapi.FindWindowExA(null, null, null, "MAXScript Listener");
-    let scirptEditor = winapi.FindWindowExA(scriptWindow, null, "MXS_Scintilla", null)
-    
-    //console.log("child Script ID", scirptEditor);
-    if (scirptEditor != 0) {
+    let scirptEditor = winapi.FindWindowExA(scriptWindow, null, "MXS_Scintilla", null);
+
+    let cmd = convertToSolidCMD(file);
+    console.log(cmd);
+
+
+    if ((scirptEditor != 0) && cmd) {
         let isCmdSent = winapi.SendMessageW(scirptEditor, WM_SETTEXT, 0, TEXT(cmd));
         let isEnterSent = winapi.SendMessageW(scirptEditor, WM_CHAR, VK_RETURN, String(0));
         console.log("cmd sent is " + isCmdSent);
         console.log("Enter sent is " + isEnterSent);
-        scirptEditor = null;
         return true;
     }
     else {
         return false;
     }
 };
+
+exports.sendMXSToMAX = sendMXSToMAX;
