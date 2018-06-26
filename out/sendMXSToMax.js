@@ -7,9 +7,9 @@
 var ffi = require('ffi');
 const path = require('path');
 
-const WM_SETTEXT = 0x000C;
-const WM_CHAR = 0x0102;
-const VK_RETURN = 0x0D;
+const WM_SETTEXT = 12//0x000C; //12
+const WM_CHAR = 258//0x0102; //258
+const VK_RETURN = 13//0x0D; //13
 
 // ffi requires the name of a dll to call methods from, along with an object
 // describing the methods we want access to - their names and an array which
@@ -18,7 +18,7 @@ const VK_RETURN = 0x0D;
 let winapi = new ffi.Library("User32", {
     "FindWindowExA": ["int32", ["int32", "int32", "string", "string"]], 
     //TODO: i dont konw how to make lParam valid under this arg list....
-    "SendMessageW": ["int32", ["int32", "uint32", "uint32", "string"]]
+    "SendMessageW": ["int32", ["int32", "uint32", ffi.types.uint32, "string"]]
 });
 
 function TEXT(text){
@@ -46,7 +46,7 @@ function sendMXSToMAX(file) {
 
     if ((scirptEditor != 0) && cmd) {
         let isCmdSent = winapi.SendMessageW(scirptEditor, WM_SETTEXT, 0, TEXT(cmd));
-        let isEnterSent = winapi.SendMessageW(scirptEditor, WM_CHAR, VK_RETURN, String(0));
+        let isEnterSent = winapi.SendMessageW(scirptEditor, WM_CHAR, VK_RETURN, "0");// kind of bugg still...Maybe js mess up with type convert?
         console.log("cmd sent is " + isCmdSent);
         console.log("Enter sent is " + isEnterSent);
         return true;
