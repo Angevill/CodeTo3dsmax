@@ -20,6 +20,11 @@
                 "command": "extension.sendMXScriptFile",
                 "key": "ctrl+e",
                 "when": "editorLangId == maxscript"
+            },
+            {
+                "command": "extension.sendMXScriptFile",
+                "key": "ctrl+e",
+                "when": "editorLangId == python"
             }
         ],
         "commands": [
