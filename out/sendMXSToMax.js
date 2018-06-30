@@ -1,10 +1,10 @@
 "use strict";
 // PLEASE make this FFI module rebuild by target electron version;
-// cause vscode was build by electron!!
-// current vscode 1.24.1 based on electron v1.7.12
-// you should rebuild like "node-gyp rebuild --target=v1.7.12 --disturl="https://atom.io/download/electron" "
-// otherwise , you will get tons of error~
-var ffi = require('ffi');
+// cause vscode was built by electron!!
+// e.g current vscode 1.24.1 based on electron v1.7.12
+// you should rebuild it like "node-gyp rebuild --target=v1.7.12 --disturl="https://atom.io/download/electron" "
+// otherwise, you will get tons of error~
+const ffi = require('ffi');
 const path = require('path');
 
 const WM_SETTEXT = 12//0x000C; //12
@@ -14,17 +14,15 @@ const VK_RETURN = 13//0x0D; //13
 // ffi requires the name of a dll to call methods from, along with an object
 // describing the methods we want access to - their names and an array which
 // contains their return type and an array of input types
-
 let winapi = new ffi.Library("User32", {
     "FindWindowExA": ["int32", ["int32", "int32", "string", "string"]], 
-    //TODO: i dont konw how to make lParam valid under this arg list....
-    "SendMessageW": ["int32", ["int32", "uint32", ffi.types.uint32, "string"]]
+    //TODO: i dont konw how to make lParam valid under this arg list.... so use string instead
+    "SendMessageW": ["int32", ["int32", "uint32", "uint32", "string"]]
 });
 
 function TEXT(text){
     return new Buffer(text, 'ucs2').toString('binary');
  }
-
 
 function convertToSolidCMD(file) {
     if (path.extname(file) === ".ms") {

@@ -10,6 +10,14 @@
     "categories": [
         "Programming Languages"
     ],
+    "keywords": [
+        "max",
+        "script",
+        "ms",
+        "mcr",
+        "mse"
+    ],
+    "preview": true,
     "activationEvents": [
         "onCommand:extension.sendMXScriptFile"
     ],
@@ -17,13 +25,13 @@
     "contributes": {
         "keybindings": [
             {
-                "command": "extension.sendMXScriptFile",
                 "key": "ctrl+e",
-                "when": "editorLangId == maxscript"
+                "command": "extension.sendMXScriptFile",     
+                "when": "editorLangId == maxscript" 
             },
             {
-                "command": "extension.sendMXScriptFile",
                 "key": "ctrl+e",
+                "command": "extension.sendMXScriptFile",
                 "when": "editorLangId == python"
             }
         ],
@@ -60,6 +68,10 @@
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Angevill/CodeTo3dsmax.git"
+    },
     "devDependencies": {
         "typescript": "^2.6.1",
         "vscode": "^1.1.6",
@@ -69,10 +81,6 @@
     },
     "dependencies": {
         "ffi": "^2.2.0",
-        "iconv-lite": "^0.4.23",
-        "ref": "^1.3.5",
-        "win32-api": "^3.0.1",
-        "win32-def": "^2.1.1",
-        "winapi": "^2.6.0"
+        "ref": "^1.3.5"
     }
 }

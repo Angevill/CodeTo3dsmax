@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const path = require('path');
-var sendCommand = require("./sendMXSToMax");
+const sendCommand = require("./sendMXSToMax");
 
 
 
@@ -24,7 +24,7 @@ function activate(context) {
         function () {
             let currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
             let currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);        
-            var isSent = sendCommand.sendMXSToMAX(currentlyOpenTabfilePath);
+            let isSent = sendCommand.sendMXSToMAX(currentlyOpenTabfilePath);
             if (isSent) {
                 let vsInfoMsg = 'Send ' + currentlyOpenTabfileName + ' to Max';
                 vscode.window.showInformationMessage(vsInfoMsg);

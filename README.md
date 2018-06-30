@@ -6,7 +6,7 @@ CodeTo3dsMax is a maxscirpt plugin for vs code
 
 1, Maxscript highlight supported
 
-2, Can send current open file into 3dsmax directly, both shortcut(ctrl+e) and command supported
+2, [Experimental] Can send current open file into 3dsmax directly, both shortcut(ctrl+e) and command supported
 
 ## Requirements
 
@@ -24,7 +24,7 @@ Weird...
 
 
 
-### 1.0.0
+### 0.0.1
 
 Initial release
 
