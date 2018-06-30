@@ -34,6 +34,7 @@ function convertToSolidCMD(file) {
     }
 } 
 
+// inspired by sublime3dsmax plugin "https://github.com/cb109/sublime3dsmax.git"
 function sendMXSToMAX(file) {
     let scriptWindow = winapi.FindWindowExA(null, null, null, "MAXScript Listener");
     let scirptEditor = winapi.FindWindowExA(scriptWindow, null, "MXS_Scintilla", null);
