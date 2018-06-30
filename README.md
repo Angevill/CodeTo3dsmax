@@ -28,4 +28,7 @@ Weird...
 
 Initial release
 
+## LICENSE
+MIT
+
 
